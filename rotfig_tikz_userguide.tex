@@ -1,0 +1,915 @@
+\documentclass[final]{siamltex}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\usepackage{rotfig_tikz}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\usepackage{multicol}
+\usepackage{fancyvrb}
+\newtheorem{example}[theorem]{\it Example}
+% some color definitions
+\usepackage{xcolor}
+
+
+\title{\texttt{rotfig\_tikz} User's Guide}
+
+\author{Thomas Mach\footnotemark[3]}
+
+\begin{document}
+\maketitle
+
+\renewcommand{\thefootnote}{\fnsymbol{footnote}}
+
+\footnotetext[3]{%
+  Department of Computer Science, KU~Leuven, Celestijnenlaan 200A, 3001 Leuven
+  (Heverlee), Belgium;
+  \mbox{(\texttt{thomas.mach@cs.kuleuven.be})}.}%
+
+\renewcommand{\thefootnote}{\arabic{footnote}}
+
+
+\date{\today}
+\maketitle
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Abstract
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{abstract}
+  A brief explanation of \texttt{rotfig\_tikz} for \LaTeX is given. Note that
+  \texttt{rotfig\_tikz} is based on Raf Vandebril's Rotational Figures package
+  \texttt{rotfig} and does not work without the \texttt{rotfig} package.
+\end{abstract}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Headings
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\pagestyle{myheadings} %
+\thispagestyle{plain} %
+\markboth{T.\ Mach}%
+{\texttt{rotfig\_tikz} User's Guide}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Text
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Introduction}
+\label{sec:introduction}
+
+The \texttt{rotfig\_tikz} package is a small extension of Raf Vandebril's
+\texttt{rotfig} package. While using the \texttt{rotfig} package with TikZ we
+noticed that we used certain figures recurrently in our papers. This packages
+aims to simplify the usage of these recurring patterns. By always using the
+same set of commands we also hope to unify our rotational notation.
+
+\subsection{License}
+The MIT License (MIT)
+
+Copyright (c) 2016,
+Thomas Mach.
+
+Permission is hereby granted, free of charge, to any person obtaining
+a copy of this software and associated documentation files (the
+"Software"), to deal in the Software without restriction, including
+without limitation the rights to use, copy, modify, merge, publish,
+distribute, sublicense, and/or sell copies of the Software, and to
+permit persons to whom the Software is furnished to do so, subject to
+the following conditions:
+
+The above copyright notice and this permission notice shall be
+included in all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE
+LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
+OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
+WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+
+
+
+\section{Dependencies}
+The \texttt{rotfig\_tikz} package is dependent on \texttt{rotfig},
+\texttt{xargs}, and \texttt{tikz} including the TikZ libraries \texttt{arrows},
+\texttt{calc} and \texttt{decorations.pathreplacing}. All these packages will be
+loaded when 
+\begin{Verbatim}
+\usepackage{rotfig_tikz}
+\end{Verbatim}
+is used in the preamble of your \LaTeX{} document. 
+
+\newpage{}
+\section{Basic operations}
+\subsection{tikzrotation}
+The most basic operation is to draw a single rotation $\begin{smallmatrix}
+  \Rc\\[0.7ex] \rc \end{smallmatrix}$ of standard size in a
+\texttt{tikzpicture}.
+
+\begin{multicols}{2}
+ \begin{Verbatim}
+  \begin{center}
+    \begin{tikzpicture}[scale=1.66,y=-1cm]
+      \tikzrotation{0.0}{0.2} 
+      \node at (0.6,0.2) 
+      [align=center] {$\times$};
+      \node at (0.6,0.4) 
+      [align=center] {$\times$};
+    \end{tikzpicture}
+  \end{center} 
+ \end{Verbatim}
+ \columnbreak
+  \begin{center}
+    \begin{tikzpicture}[scale=1.66,y=-1cm]
+      \tikzrotation{0.0}{0.2} 
+      \node at (0.6,0.2) 
+      [align=center] {$\times$};
+      \node at (0.6,0.4) 
+      [align=center] {$\times$};
+    \end{tikzpicture}
+  \end{center} 
+\end{multicols}
+
+The first argument is the x-coordinate, the second the y-coordinate of the upper
+arrow. If $\times$ are position in the same rows, then the arrows point to the
+center of $\times$. \texttt{tikzrotation} has further four optional arguments,
+which can be used to mark rotations by color or with a name.
+
+\paragraph{Changing the color}
+
+\begin{multicols}{2}
+ \begin{Verbatim}
+  \begin{center}
+    \begin{tikzpicture}[scale=1.66,y=-1cm]
+      \tikzrotation[orange]{0.0}{0.2} 
+    \end{tikzpicture}
+  \end{center} 
+ \end{Verbatim}
+ \columnbreak
+  \begin{center}
+    \begin{tikzpicture}[scale=1.66,y=-1cm]
+      \tikzrotation[orange]{0.0}{0.2} 
+    \end{tikzpicture}
+  \end{center} 
+\end{multicols}
+
+\paragraph{Placinc a letter on the right}
+
+\begin{multicols}{2}
+ \begin{Verbatim}
+  \begin{center}
+    \begin{tikzpicture}[scale=1.66,y=-1cm]
+      \tikzrotation[black][a]{0.0}{0.2} 
+    \end{tikzpicture}
+  \end{center} 
+ \end{Verbatim}
+ \columnbreak
+  \begin{center}
+    \begin{tikzpicture}[scale=1.66,y=-1cm]
+      \tikzrotation[black][a]{0.0}{0.2} 
+    \end{tikzpicture}
+  \end{center} 
+\end{multicols}
+
+\paragraph{Placing a letter below}
+
+\begin{multicols}{2}
+ \begin{Verbatim}
+  \begin{center}
+    \begin{tikzpicture}[scale=1.66,y=-1cm]
+      \tikzrotation[black][][b]{0.0}{0.2} 
+    \end{tikzpicture}
+  \end{center} 
+ \end{Verbatim}
+ \columnbreak
+  \begin{center}
+    \begin{tikzpicture}[scale=1.66,y=-1cm]
+      \tikzrotation[black][][b]{0.0}{0.2} 
+    \end{tikzpicture}
+  \end{center} 
+\end{multicols}
+
+\paragraph{Placing a letter above}
+
+\begin{multicols}{2}
+  \begin{Verbatim}
+    \begin{center}
+      \begin{tikzpicture}[scale=1.66,y=-1cm]
+        \tikzrotation[black][][][c]{0.0}{0.2} 
+      \end{tikzpicture}
+    \end{center} 
+  \end{Verbatim}
+  \columnbreak
+  \begin{center}
+    \begin{tikzpicture}[scale=1.66,y=-1cm]
+      \tikzrotation[black][][][c]{0.0}{0.2} 
+    \end{tikzpicture}
+  \end{center} 
+\end{multicols}
+
+\newpage{}
+\paragraph{Example}
+The QR decomposition of an upper Hessenberg matrix.
+
+\begin{multicols}{2}
+  \begin{Verbatim}
+  \begin{center}
+    \begin{tikzpicture}[scale=1.66,y=-1cm]
+      \foreach \j in {0,...,7} { 
+        \tikzrotation{\j/5}{\j/5}
+      }
+      \foreach \j in {0,...,8} { 
+        \foreach \i in {\j,...,8} {
+          \node at (\i/5+0.6,\j/5)
+          [align=center,scale=1.0] {$\times$};
+        } 
+      }; 
+    \end{tikzpicture}
+  \end{center} 
+  \end{Verbatim}
+  \columnbreak
+  \begin{center}
+    \begin{tikzpicture}[scale=1.66,y=-1cm]
+      \foreach \j in {0,...,7} { 
+        \tikzrotation{\j/5}{\j/5}
+      }
+      \foreach \j in {0,...,8} { 
+        \foreach \i in {\j,...,8} {
+          \node at (\i/5+0.6,\j/5)
+          [align=center,scale=1.0] {$\times$};
+        } 
+      }; 
+    \end{tikzpicture}
+  \end{center} 
+\end{multicols}  
+
+
+\subsection{tikzrotationsmall}
+Sometimes we like to draw small pictures. That is possible with
+\texttt{tikzrotationsmall}.  
+
+\begin{multicols}{2}
+ \begin{Verbatim}
+  \begin{center}
+    \begin{tikzpicture}[y=-1cm]
+      \tikzrotationsmall{0.0}{0.2} 
+    \end{tikzpicture}
+  \end{center} 
+ \end{Verbatim}
+ \columnbreak
+  \begin{center}
+    \begin{tikzpicture}[y=-1cm]
+      \tikzrotationsmall{0.0}{0.2} 
+    \end{tikzpicture}
+  \end{center} 
+\end{multicols}
+
+The first argument is the x-coordinate, the second the
+y-coordinate. \texttt{tikzrotationsmall} has the same four optional arguments,
+which can be used to mark rotations by color or with a name.
+
+\paragraph{Changing the color}
+
+\begin{multicols}{2}
+ \begin{Verbatim}
+  \begin{center}
+    \begin{tikzpicture}[y=-1cm]
+      \tikzrotationsmall[orange]{0.0}{0.2} 
+    \end{tikzpicture}
+  \end{center} 
+ \end{Verbatim}
+ \columnbreak
+  \begin{center}
+    \begin{tikzpicture}[y=-1cm]
+      \tikzrotationsmall[orange]{0.0}{0.2} 
+    \end{tikzpicture}
+  \end{center} 
+\end{multicols}
+
+\paragraph{Placinc a letter on the right}
+
+\begin{multicols}{2}
+ \begin{Verbatim}
+  \begin{center}
+    \begin{tikzpicture}[y=-1cm]
+      \tikzrotationsmall[black][a]{0.0}{0.2} 
+    \end{tikzpicture}
+  \end{center} 
+ \end{Verbatim}
+ \columnbreak
+  \begin{center}
+    \begin{tikzpicture}[y=-1cm]
+      \tikzrotationsmall[black][a]{0.0}{0.2} 
+    \end{tikzpicture}
+  \end{center} 
+\end{multicols}
+
+\paragraph{Placing a letter below}
+
+\begin{multicols}{2}
+ \begin{Verbatim}
+  \begin{center}
+    \begin{tikzpicture}[y=-1cm]
+      \tikzrotationsmall[black][][b]{0.0}{0.2} 
+    \end{tikzpicture}
+  \end{center} 
+ \end{Verbatim}
+ \columnbreak
+  \begin{center}
+    \begin{tikzpicture}[y=-1cm]
+      \tikzrotationsmall[black][][b]{0.0}{0.2} 
+    \end{tikzpicture}
+  \end{center} 
+\end{multicols}
+
+\paragraph{Placing a letter above}
+
+\begin{multicols}{2}
+  \begin{Verbatim}
+    \begin{center}
+      \begin{tikzpicture}[y=-1cm]
+        \tikzrotationsmall[black][][][c]{0.0}{0.2} 
+      \end{tikzpicture}
+    \end{center} 
+  \end{Verbatim}
+  \columnbreak
+  \begin{center}
+    \begin{tikzpicture}[y=-1cm]
+      \tikzrotationsmall[black][][][c]{0.0}{0.2} 
+    \end{tikzpicture}
+  \end{center} 
+\end{multicols}
+
+
+\paragraph{Example}
+The QR decomposition of an upper Hessenberg matrix.
+
+\begin{multicols}{2}
+  \begin{Verbatim}
+  \begin{center}
+    \begin{tikzpicture}[y=-1cm]
+      \foreach \j in {0,...,7} { 
+        \tikzrotationsmall{\j/5}{\j/5}
+      }
+      \foreach \j in {0,...,8} { 
+        \foreach \i in {\j,...,8} {
+          \node at (\i/5+0.6,\j/5)
+          [align=center,scale=0.6] {$\times$};
+        } 
+      }; 
+    \end{tikzpicture}
+  \end{center} 
+  \end{Verbatim}
+  \columnbreak
+  \begin{center}
+    \begin{tikzpicture}[y=-1cm]
+      \foreach \j in {0,...,7} { 
+        \tikzrotationsmall{\j/5}{\j/5}
+      }
+      \foreach \j in {0,...,8} { 
+        \foreach \i in {\j,...,8} {
+          \node at (\i/5+0.6,\j/5)
+          [align=center,scale=0.6] {$\times$};
+        } 
+      }; 
+    \end{tikzpicture}
+  \end{center} 
+\end{multicols}  
+
+\subsection{uppertriangular}
+Sometimes we depict an upper triangular matrix by an upper triangular
+shape. Therefore we use the command \texttt{uppertriangular}
+
+\begin{multicols}{2}
+  \begin{Verbatim}
+  \begin{center}
+    \begin{tikzpicture}[y=-1cm]
+      \uppertriangular{0.0}{0.0}
+    \end{tikzpicture}
+  \end{center} 
+  \end{Verbatim}
+  \columnbreak
+  \begin{center}
+    \begin{tikzpicture}[y=-1cm]
+      \uppertriangular{0.0}{0.0}
+    \end{tikzpicture}
+  \end{center} 
+\end{multicols}  
+
+The upper triangle has a height and a width of 8 rotations or 9 entries. The
+first argument is the x-coordinate of the upper left corner, the second argument
+is the y-coordinate.
+
+There are two additional optional argument. The first one changes the color.
+\begin{multicols}{2}
+  \begin{Verbatim}
+  \begin{center}
+    \begin{tikzpicture}[y=-1cm]
+      \uppertriangular[green]{0.0}{0.0}
+    \end{tikzpicture}
+  \end{center} 
+  \end{Verbatim}
+  \columnbreak
+  \begin{center}
+    \begin{tikzpicture}[y=-1cm]
+      \uppertriangular[green]{0.0}{0.0}
+    \end{tikzpicture}
+  \end{center} 
+\end{multicols}  
+
+The second one specifies the size in rotations.
+\begin{multicols}{2}
+  \begin{Verbatim}
+  \begin{center}
+    \begin{tikzpicture}[y=-1cm]
+      \uppertriangular[black][5]{0.0}{0.0}
+    \end{tikzpicture}
+  \end{center} 
+  \end{Verbatim}
+  \columnbreak
+  \begin{center}
+    \begin{tikzpicture}[y=-1cm]
+      \uppertriangular[black][5]{0.0}{0.0}
+    \end{tikzpicture}
+  \end{center} 
+\end{multicols}  
+
+
+
+
+\paragraph{Example}
+The QR decomposition of an upper Hessenberg matrix.
+
+\begin{multicols}{2}
+  \begin{Verbatim}
+  \begin{center}
+    \begin{tikzpicture}[scale=1.66,y=-1cm]
+      \foreach \j in {0,...,7} { 
+        \tikzrotation{\j/5}{\j/5}
+      }
+      \uppertriangular{0.6}{0.0}
+
+      \foreach \j in {0,...,4} { 
+        \tikzrotation{\j/5}{\j/5+2.0}
+      }
+      \uppertriangular[black][5]{0.6}{2.0}
+    \end{tikzpicture}
+  \end{center} 
+  \end{Verbatim}
+  \columnbreak
+  \begin{center}
+    \begin{tikzpicture}[scale=1.66,y=-1cm]
+      \foreach \j in {0,...,7} { 
+        \tikzrotation{\j/5}{\j/5}
+      }
+      \uppertriangular{0.6}{0.0}
+
+      \foreach \j in {0,...,4} { 
+        \tikzrotation{\j/5}{\j/5+2.0}
+      }
+      \uppertriangular[black][5]{0.6}{2.0}
+    \end{tikzpicture}
+  \end{center} 
+\end{multicols}  
+
+
+\subsection{shiftthroughlr and shiftthroughrl}
+We sometimes draw an arrow to indicate that a rotation was passed through an
+upper triangular. We use \texttt{shiftthroughlr} for shifting a rotation from
+left to right and \texttt{shiftthroughlr} for right to left.
+
+\begin{multicols}{2}
+  \begin{Verbatim}
+  \begin{center}
+    \begin{tikzpicture}[y=-1cm]
+      \shiftthroughlr{0.0}{1.0}{0.0}
+      \shiftthroughrl{2.0}{1.0}{0.5}
+    \end{tikzpicture}
+  \end{center} 
+  \end{Verbatim}
+  \columnbreak
+  \begin{center}
+    \begin{tikzpicture}[y=-1cm]
+      \shiftthroughlr{0.0}{1.0}{0.0}
+      \shiftthroughrl{2.0}{1.0}{0.5}
+    \end{tikzpicture}
+  \end{center} 
+\end{multicols}
+The first argument is the x-coordinate of the rotation before the shift through
+operation, the second argument is the x-coordinate of the rotation after the
+shift through operation, and the third argument is the y-coordinate.
+
+There is an optional argument to change the color.
+
+\begin{multicols}{2}
+  \begin{Verbatim}
+  \begin{center}
+    \begin{tikzpicture}[y=-1cm]
+      \shiftthroughlr[blue]{0.0}{1.0}{0.0}
+      \shiftthroughrl[red]{2.0}{1.0}{0.5}
+    \end{tikzpicture}
+  \end{center} 
+  \end{Verbatim}
+  \columnbreak
+  \begin{center}
+    \begin{tikzpicture}[y=-1cm]
+      \shiftthroughlr[blue]{0.0}{1.0}{0.0}
+      \shiftthroughrl[red]{2.0}{1.0}{0.5}
+    \end{tikzpicture}
+  \end{center} 
+\end{multicols}
+
+
+\newpage{}
+\paragraph{Example}
+An example with rotations and upper triangular matrix looks like:
+
+\begin{multicols}{2}
+  \begin{Verbatim}
+  \begin{center}
+    \begin{tikzpicture}
+      [scale=1.66,y=-1cm]
+      \tikzrotation{0.0}{0.2}
+      \tikzrotation{2.4}{0.2}
+      \shiftthroughlr{0.0}{2.4}{0.2}
+      \tikzrotation{2.2}{0.8}
+      \tikzrotation{0.4}{0.8}
+      \shiftthroughrl{2.2}{0.4}{0.8}
+    \end{tikzpicture}
+  \end{center} 
+  \end{Verbatim}
+  \columnbreak
+  \begin{center}
+    \begin{tikzpicture}
+      [scale=1.66,y=-1cm]
+      \tikzrotation{0.0}{0.2}
+      \tikzrotation{2.4}{0.2}
+      \shiftthroughlr{0.0}{2.4}{0.2}
+      \tikzrotation{2.2}{0.8}
+      \tikzrotation{0.4}{0.8}
+      \shiftthroughrl{2.2}{0.4}{0.8}
+    \end{tikzpicture}
+  \end{center} 
+\end{multicols}  
+
+
+\subsection{similaritylr and similarityrl}
+A similarity transformation can be used to bring a rotation from one side of a
+matrix to the other. Therefore a curly arrow is used.
+
+\begin{multicols}{2}
+  \begin{Verbatim}
+  \begin{center}
+    \begin{tikzpicture}[scale=1.66,y=-1cm]
+      \similaritylr{0.0}{1.0}{0.0}
+      \similarityrl{2.0}{1.0}{0.5}
+    \end{tikzpicture}
+  \end{center} 
+  \end{Verbatim}
+  \columnbreak
+  \begin{center}
+    \begin{tikzpicture}[scale=1.66,y=-1cm]
+      \similaritylr{0.0}{1.0}{0.0}
+      \similarityrl{2.0}{1.0}{0.5}
+    \end{tikzpicture}
+  \end{center} 
+\end{multicols}
+The first argument is the x-coordinate of the rotation before the similarity
+transformation, the second argument is the x-coordinate of the rotation after
+the similarity transformation, and the third argument is the y-coordinate.
+
+There is an optional argument to change the color.
+
+\begin{multicols}{2}
+  \begin{Verbatim}
+  \begin{center}
+    \begin{tikzpicture}[scale=1.66,y=-1cm]
+      \similaritylr[blue]{0.0}{1.0}{0.0}
+      \similarityrl[red]{2.0}{1.0}{0.5}
+    \end{tikzpicture}
+  \end{center} 
+  \end{Verbatim}
+  \columnbreak
+  \begin{center}
+    \begin{tikzpicture}[scale=1.66,y=-1cm]
+      \similaritylr[blue]{0.0}{1.0}{0.0}
+      \similarityrl[red]{2.0}{1.0}{0.5}
+    \end{tikzpicture}
+  \end{center} 
+\end{multicols}
+
+
+\paragraph{Example}
+An example with rotations and an upper triangular matrix looks like:
+
+\begin{multicols}{2}
+  \begin{Verbatim}
+  \begin{center}
+    \begin{tikzpicture}
+      [scale=1.66,y=-1cm]
+      \tikzrotation{0.0}{0.2}
+      \tikzrotation{2.4}{0.2}
+      \similaritylr{0.0}{2.4}{0.2}
+      \tikzrotation{2.2}{0.8}
+      \tikzrotation{0.4}{0.8}
+      \similarityrl{2.2}{0.4}{0.8}
+    \end{tikzpicture}
+  \end{center} 
+  \end{Verbatim}
+  \columnbreak
+  \begin{center}
+    \begin{tikzpicture}
+      [scale=1.66,y=-1cm]
+      \tikzrotation{0.0}{0.2}
+      \tikzrotation{2.4}{0.2}
+      \similaritylr{0.0}{2.4}{0.2}
+      \tikzrotation{2.2}{0.8}
+      \tikzrotation{0.4}{0.8}
+      \similarityrl{2.2}{0.4}{0.8}
+    \end{tikzpicture}
+  \end{center} 
+\end{multicols}  
+
+
+\subsection{turnoverrl and turnoverlr}
+With a turnover a rotation is moved through an ascending or descending sequence
+of rotations. This can be done from left to right and from right to left. We
+depict it sometimes with an arrow.
+
+
+\begin{multicols}{2}
+  \begin{Verbatim}
+  \begin{center}
+    \begin{tikzpicture}[scale=1.66,y=-1cm]
+      \turnoverlr{-0.2}{0.2}{0.4}{0.4}
+      \turnoverrl{0.4}{0.6}{-0.2}{0.8}
+    \end{tikzpicture}
+  \end{center} 
+  \end{Verbatim}
+  \columnbreak
+  \begin{center}
+    \begin{tikzpicture}[scale=1.66,y=-1cm]
+    \turnoverlr{-0.2}{0.2}{0.4}{0.4}
+    \turnoverrl{0.4}{0.6}{-0.2}{0.8}
+    \end{tikzpicture}
+  \end{center} 
+\end{multicols}  
+
+The first argument is the x-coordinate of the rotation before the turnover, the
+second argument is the y-coordinate, the third and fourth arguments are the x-
+and y-coordinate after the turnover. An optional argument changes the color.
+
+\paragraph{Example}
+\begin{multicols}{2}
+  \begin{Verbatim}
+  \begin{center}
+    \begin{tikzpicture}[scale=1.66,y=-1cm]
+      \tikzrotation{0.2}{0.2}
+      \tikzrotation{0.0}{0.4}
+      \tikzrotation{-0.2}{0.6}
+      \tikzrotation{0.0}{0.8}
+      \tikzrotation{0.2}{1.0}
+      \tikzrotation[blue]{-0.2}{0.2}
+      \turnoverlr[blue]{-0.2}{0.2}{0.4}{0.4}
+      \tikzrotation[blue]{0.4}{0.4}
+      \tikzrotation[orange]{0.4}{0.8}
+      \turnoverrl[orange]{0.4}{0.8}{-0.2}{1.0}
+      \tikzrotation[orange]{-0.2}{1.0}
+    \end{tikzpicture}
+  \end{center} 
+  \end{Verbatim}
+  \columnbreak
+  \begin{center}
+    \begin{tikzpicture}[scale=1.66,y=-1cm]
+    \tikzrotation{0.2}{0.2}
+    \tikzrotation{0.0}{0.4}
+    \tikzrotation{-0.2}{0.6}
+    \tikzrotation{0.0}{0.8}
+    \tikzrotation{0.2}{1.0}
+    \tikzrotation[blue]{-0.2}{0.2}
+    \turnoverlr[blue]{-0.2}{0.2}{0.4}{0.4}
+    \tikzrotation[blue]{0.4}{0.4}
+    \tikzrotation[orange]{0.4}{0.8}
+    \turnoverrl[orange]{0.4}{0.8}{-0.2}{1.0}
+    \tikzrotation[orange]{-0.2}{1.0}
+    \end{tikzpicture}
+  \end{center} 
+\end{multicols}  
+
+
+\subsection{transferbulgelr and transferbulgerl}
+Similar to the similarity transformation one can move a rotation from one matrix
+of a matrix pencil to the other. We depict this also with a curly arrow.
+
+\begin{multicols}{2}
+  \begin{Verbatim}
+  \begin{center}
+    \begin{tikzpicture}[y=-1cm]
+    \transferbulgelr{0.2}{2.2}{0.0}
+    \transferbulgerl{2.6}{0.6}{0.8}
+    \end{tikzpicture}
+  \end{center} 
+  \end{Verbatim}
+  \columnbreak
+  \begin{center}
+    \begin{tikzpicture}[y=-1cm]
+    \transferbulgelr{0.2}{2.2}{0.0}
+    \transferbulgerl{2.6}{0.6}{0.8}
+    \end{tikzpicture}
+  \end{center} 
+\end{multicols}  
+
+The first argument is the x-coordinate of the rotation before the equivalence
+transformation, the second argument is the x-coordinate of the rotation after,
+and the third argument is the y-coordinate.
+
+There is an optional argument to change the color.
+
+\begin{multicols}{2}
+  \begin{Verbatim}
+  \begin{center}
+    \begin{tikzpicture}[y=-1cm]
+    \transferbulgelr[orange]{0.2}{2.2}{0.0}
+    \transferbulgerl[gray]{2.6}{0.6}{0.8}
+    \end{tikzpicture}
+  \end{center} 
+  \end{Verbatim}
+  \columnbreak
+  \begin{center}
+    \begin{tikzpicture}[y=-1cm]
+    \transferbulgelr[orange]{0.2}{2.2}{0.0}
+    \transferbulgerl[gray]{2.6}{0.6}{0.8}
+    \end{tikzpicture}
+  \end{center} 
+\end{multicols}  
+
+
+\paragraph{Example}
+%\begin{multicols}{2}
+  \begin{Verbatim}
+  \begin{center}
+    \begin{tikzpicture}[scale=1.66,y=-1cm]
+    \uppertriangular{0.0}{0.0}
+    \node[above] at (2.2,1.2) {,};      
+    \uppertriangular{2.7}{0.0}
+    \tikzrotation{4.5}{0.4}
+    \tikzrotation{1.8}{0.4}
+    \transferbulgerl{4.5}{1.8}{0.4}
+    \end{tikzpicture}
+  \end{center} 
+  \end{Verbatim}
+  %\columnbreak
+  \begin{center}
+    \begin{tikzpicture}[scale=1.66,y=-1cm]
+    \uppertriangular{0.0}{0.0}
+    \node[above] at (2.0,1.2) {,};      
+    \uppertriangular{2.2}{0.0}
+    \tikzrotation{4.0}{0.4}
+    \tikzrotation{1.8}{0.4}
+    \transferbulgerl{4.0}{1.8}{0.4}
+    \end{tikzpicture}
+  \end{center} 
+%\end{multicols}  
+
+\subsection{drawbrace}
+
+The command drawbrace can be used to provide further information for a sequence
+of rotations.
+
+\begin{multicols}{2}
+  \begin{Verbatim}
+  \begin{center}
+    \begin{tikzpicture}[y=-1cm]
+      \drawbrace{0.0}{1.0}{0.0}{$=C_{1}\dotsc C_{n-1}$}
+    \end{tikzpicture}
+  \end{center} 
+  \end{Verbatim}
+  \columnbreak
+  \begin{center}
+    \begin{tikzpicture}[y=-1cm]
+      \drawbrace{0.0}{1.0}{0.0}{$=C_{1}\dotsc C_{n-1}$}
+    \end{tikzpicture}
+  \end{center} 
+\end{multicols}  
+
+The first argument is the x-coordinate of the leftmost rotation, the second
+argument the x-coordinate of the rightmost rotation. The third argument is the
+y-coordinate of the brace and the last argument is the text below. There is an
+optional argument for changing the color.
+
+\begin{multicols}{2}
+  \begin{Verbatim}
+  \begin{center}
+    \begin{tikzpicture}[y=-1cm]
+      \drawbrace[blue]{0.0}{1.0}{0.0}{$=C_{1}\dotsc C_{n-1}$}
+    \end{tikzpicture}
+  \end{center} 
+  \end{Verbatim}
+  \columnbreak
+  \begin{center}
+    \begin{tikzpicture}[y=-1cm]
+      \drawbrace[blue]{0.0}{1.0}{0.0}{$C_{1}\dotsc C_{n-1}$}
+    \end{tikzpicture}
+  \end{center} 
+\end{multicols}  
+
+\newpage{}
+\paragraph{Example}
+\begin{multicols}{2}
+  \begin{Verbatim}
+  \begin{center}
+    \begin{tikzpicture}[scale=1.66,y=-1cm]
+      \foreach \j in {0,...,7} { 
+        \tikzrotation{\j/5}{\j/5}
+      }
+      \drawbrace{0.0}{1.4}{2.0}{$G_{1}
+        \dotsc G_{n-1}$}
+    \end{tikzpicture}
+  \end{center} 
+  \end{Verbatim}
+  \columnbreak
+  \begin{center}
+    \begin{tikzpicture}[scale=1.66,y=-1cm]
+      \foreach \j in {0,...,7} { 
+        \tikzrotation{\j/5}{\j/5}
+      }
+      \drawbrace{0.0}{1.4}{2.0}{$G_{1}
+        \dotsc G_{n-1}$}
+    \end{tikzpicture}
+  \end{center} 
+\end{multicols}  
+
+
+\section{New in version 1.1}
+
+All arrows (shiftthroughlr and shiftthroughrl, similaritylr and similarityrl,
+turnoverrl and turnoverlr, and transferbulgelr and transferbulgerl) do now have
+a second optional argument which allows to place a short text above the arrow.
+
+\begin{multicols}{2}
+  \begin{Verbatim}
+  \begin{center}
+    \begin{tikzpicture}[scale=1.66,y=-1cm]
+      \tikzrotation{0.0}{0.0}%
+      \tikzrotation{0.2}{0.2}%   
+      \node at (0.6,0.0){$\times$};%
+      \node at (0.8,0.2){$\times$};%
+      \node at (1.0,0.4){$\times$};%
+      \tikzrotation[red]{0.6}{0.0}
+      \shiftthroughrl[red][(1)]{1.6}{0.4}{0.0}
+      \tikzrotation[red]{0.4}{0.0}
+      \turnoverrl[red][(2)]{0.4}{0.0}{-0.2}{0.2}
+      \tikzrotation[red]{-0.2}{0.2}    
+      \similaritylr[red][(3)]{-0.2}{0.0}{0.2}
+      \tikzrotation[red]{2.0}{0.2}
+      \shiftthroughrl[red][(4)]{2.0}{0.2}{0.2}
+    \end{tikzpicture}
+  \end{center} 
+  \end{Verbatim}
+  \columnbreak
+  \begin{center}
+    \begin{tikzpicture}[scale=1.66,y=-1cm]
+      \tikzrotation{0.0}{0.0}%
+      \tikzrotation{0.2}{0.2}%   
+      \node at (0.6,0.0){$\times$};%
+      \node at (0.8,0.2){$\times$};%
+      \node at (1.0,0.4){$\times$};%
+      \tikzrotation[red]{1.6}{0.0}
+      \shiftthroughrl[red][(1)]{1.6}{0.4}{0.0}
+      \tikzrotation[red]{0.4}{0.0}
+      \turnoverrl[red][(2)]{0.4}{0.0}{-0.2}{0.2}
+      \tikzrotation[red]{-0.2}{0.2}    
+      \similaritylr[red][(3)]{-0.2}{2.0}{0.2}
+      \tikzrotation[red]{2.0}{0.2}
+      \shiftthroughrl[red][(4)]{2.0}{0.2}{0.2}
+    \end{tikzpicture}
+  \end{center} 
+\end{multicols}  
+
+
+
+\end{document}
+
+%\begin{multicols}{2}
+  % \begin{Verbatim}
+  % \begin{center}
+  %   \begin{tikzpicture}[y=-1cm]
+  %   \end{tikzpicture}
+  % \end{center} 
+  % \end{Verbatim}
+%  \columnbreak
+  % \begin{center}
+  %   \begin{tikzpicture}[y=-1cm]
+  %   \end{tikzpicture}
+  % \end{center} 
+%\end{multicols}  
+
+
+%%% Local Variables: 
+%%% mode: LaTeX
+%%% TeX-PDF-mode:t
+%%% TeX-engine: luatex
+%%% auto-fill-function:nil
+%%% mode:auto-fill
+%%% flyspell-mode:nil
+%%% mode:flyspell
+%%% ispell-local-dictionary: "american"
+%%% End: 
